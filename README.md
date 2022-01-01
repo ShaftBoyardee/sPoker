@@ -1,2 +1,2 @@
 # sPoker
-ponker
+An unfinished texas holdem thingy
