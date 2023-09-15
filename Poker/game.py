@@ -11,7 +11,7 @@ class Holdem:
     def __init__(self) -> None:
         self.community = Hand()
         self.players = list()
-        self.deck = Deck()
+        self.deck = Deck(ace_high=True)
         self.deck.shuffle()
     
     def _deal(self, player: Player) -> None:
@@ -24,7 +24,7 @@ class Holdem:
         """
         if len(self.community) <= 3:
             return Hand(card_list=hand.cards + self.community)
-        return [Hand(card_list=(hand.cards + list(comb))) for comb in list(itertools.combinations(self.community.cards, 3))]
+        return [Hand(card_list=(hand.cards + list(comb))) for comb in itertools.combinations(self.community.cards, 3)]
     
     def _check_flush(self, hand: Hand) -> bool:
         """
@@ -55,6 +55,8 @@ class Holdem:
             hand[2].value == 12 and hand[3].value == 13:
                 # royal straight
                 return True, flush, True
+            else:
+                return False, flush, False
         else:
             last = hand[0].value - 1
             for card in hand:
